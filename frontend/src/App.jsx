@@ -2,11 +2,7 @@ import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import io from 'socket.io-client'
-
-const socket = io('http://localhost:3000')
-
-socket.on
+import { socket } from './socket.jsx'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,14 +10,19 @@ function App() {
   const [messages, setMessages] = useState([])
 
   useEffect(() => {
-    socket.on('connect', () => {
-      console.log('Connected to server')
-    })
+    const onConnect = () => console.log('connected')
+
+    socket.on('connect', onConnect)
 
     socket.on('chat', (msg) => {
       console.log('Message from server:', msg)
       setMessages(prev => [...prev, msg])
     })
+
+    return () => {
+      socket.off('connect', onConnect)
+      socket.off('chat')
+    }
   }, [])
 
   useEffect(() => {
