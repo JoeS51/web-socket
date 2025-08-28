@@ -33,7 +33,7 @@ io.on('connection', (socket) => {
 
   socket.on('chat', (msg) => {
     console.log(msg)
-    socket.broadcast.emit('chat', msg)
+    io.emit('chat', msg)
   })
 
   io.on('disconnect', () => {
