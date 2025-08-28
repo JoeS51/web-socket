@@ -1,53 +1,113 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { socket } from './socket.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
+  const [isConnected, setIsConnected] = useState(false)
 
   useEffect(() => {
-    const onConnect = () => console.log('connected')
+    const onConnect = () => {
+      console.log('connected')
+      setIsConnected(true)
+    }
+
+    const onDisconnect = () => {
+      console.log('disconnected')
+      setIsConnected(false)
+    }
 
     socket.on('connect', onConnect)
+    socket.on('disconnect', onDisconnect)
 
     socket.on('chat', (msg) => {
       console.log('Message from server:', msg)
-      setMessages(prev => [...prev, msg])
+      setMessages(prev => [...prev, { text: msg, timestamp: new Date().toLocaleTimeString() }])
     })
 
     return () => {
       socket.off('connect', onConnect)
+      socket.off('disconnect', onDisconnect)
       socket.off('chat')
     }
   }, [])
 
-  useEffect(() => {
-    console.log("new msg")
-  }, [messages])
-
   const submitMessage = (e) => {
     e.preventDefault()
-    socket.emit('chat', message)
-    setMessage('')
+    if (message.trim()) {
+      socket.emit('chat', message)
+      setMessage('')
+    }
   }
 
   const messageChange = (e) => {
     setMessage(e.target.value)
   }
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      submitMessage(e)
+    }
+  }
+
   return (
-    <>
-      <div>
-        {messages.map((msg, index) => (
-          <p key={index}>{msg}</p>
-        ))}
-        <input id="input" onInput={messageChange} value={message} /><button onClick={submitMessage}>Send</button>
+    <div className="win95-desktop">
+      <div className="chat-window">
+        <div className="title-bar">
+          <div className="title-bar-text">Chat Application</div>
+          <div className="title-bar-controls">
+            <button className="title-bar-control" aria-label="Minimize"></button>
+            <button className="title-bar-control" aria-label="Maximize"></button>
+            <button className="title-bar-control close" aria-label="Close"></button>
+          </div>
+        </div>
+
+        <div className="window-body">
+          <div className="status-bar">
+            <span className={`connection-status ${isConnected ? 'connected' : 'disconnected'}`}>
+              {isConnected ? '● Connected' : '○ Disconnected'}
+            </span>
+          </div>
+
+          <div className="messages-container">
+            <div className="messages-list">
+              {messages.length === 0 ? (
+                <div className="no-messages">No messages yet. Start chatting!</div>
+              ) : (
+                messages.map((msg, index) => (
+                  <div key={index} className="message-item">
+                    <span className="message-time">[{msg.timestamp}]</span>
+                    <span className="message-text">{msg.text}</span>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+
+          <div className="input-container">
+            <div className="input-group">
+              <input
+                type="text"
+                className="message-input"
+                placeholder="Type your message..."
+                value={message}
+                onChange={messageChange}
+                onKeyPress={handleKeyPress}
+                disabled={!isConnected}
+              />
+              <button
+                className="send-button"
+                onClick={submitMessage}
+                disabled={!isConnected || !message.trim()}
+              >
+                Send
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 
