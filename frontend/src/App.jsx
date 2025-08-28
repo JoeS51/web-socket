@@ -20,9 +20,13 @@ function App() {
 
     socket.on('chat', (msg) => {
       console.log('Message from server:', msg)
-      messages.push(msg)
+      setMessages(prev => [...prev, msg])
     })
   }, [])
+
+  useEffect(() => {
+    console.log("new msg")
+  }, [messages])
 
   const submitMessage = (e) => {
     e.preventDefault()
