@@ -1,0 +1,284 @@
+/* Windows 95 Style Login Screen */
+
+.login-desktop {
+  height: 100vh;
+  width: 100vw;
+  background: #008080;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: 'MS Sans Serif', sans-serif;
+  font-size: 11px;
+}
+
+.login-window {
+  width: 400px;
+  background: #c0c0c0;
+  border: 2px outset #c0c0c0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Title Bar */
+.login-title-bar {
+  background: linear-gradient(90deg, #0000ff 0%, #008080 100%);
+  color: white;
+  padding: 2px 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 18px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.login-title-text {
+  padding-left: 4px;
+}
+
+.login-title-controls {
+  display: flex;
+  gap: 2px;
+}
+
+.login-title-control {
+  width: 16px;
+  height: 14px;
+  background: #c0c0c0;
+  border: 1px outset #c0c0c0;
+  font-size: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.login-title-control:hover {
+  background: #e0e0e0;
+}
+
+.login-title-control:active {
+  border: 1px inset #c0c0c0;
+}
+
+.login-title-control.close {
+  background: #ff0000;
+  color: white;
+}
+
+.login-title-control.close:hover {
+  background: #ff4040;
+}
+
+/* Window Body */
+.login-window-body {
+  padding: 16px;
+  background: #c0c0c0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Login Header */
+.login-header {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.login-icon {
+  width: 32px;
+  height: 32px;
+  background: #008080;
+  border: 2px outset #c0c0c0;
+  margin: 0 auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+}
+
+.login-title {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.login-subtitle {
+  font-size: 10px;
+  color: #404040;
+}
+
+/* Form Group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-label {
+  font-size: 11px;
+  font-weight: normal;
+  color: #000000;
+}
+
+.form-input {
+  height: 22px;
+  border: 2px inset #c0c0c0;
+  background: white;
+  color: #000000;
+  padding: 2px 4px;
+  font-family: 'MS Sans Serif', sans-serif;
+  font-size: 11px;
+  outline: none;
+}
+
+.form-input:focus {
+  background: #ffffff;
+  border: 2px inset #c0c0c0;
+}
+
+.form-input:disabled {
+  background: #e0e0e0;
+  color: #808080;
+}
+
+/* Checkbox */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 0;
+}
+
+.checkbox-input {
+  width: 13px;
+  height: 13px;
+  border: 2px inset #c0c0c0;
+  background: white;
+  appearance: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.checkbox-input:checked {
+  background: white;
+}
+
+.checkbox-input:checked::after {
+  content: '✓';
+  position: absolute;
+  left: 1px;
+  top: -2px;
+  font-size: 10px;
+  color: #000000;
+  font-weight: bold;
+}
+
+.checkbox-label {
+  font-size: 11px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.login-button {
+  width: 80px;
+  height: 24px;
+  background: #c0c0c0;
+  border: 2px outset #c0c0c0;
+  font-family: 'MS Sans Serif', sans-serif;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 0;
+  font-weight: normal;
+}
+
+.login-button:hover:not(:disabled) {
+  background: #e0e0e0;
+}
+
+.login-button:active:not(:disabled) {
+  border: 2px inset #c0c0c0;
+}
+
+.login-button:disabled {
+  background: #e0e0e0;
+  color: #808080;
+  cursor: not-allowed;
+}
+
+.login-button.primary {
+  font-weight: bold;
+}
+
+/* Status Message */
+.status-message {
+  padding: 8px;
+  border: 2px inset #c0c0c0;
+  background: white;
+  font-size: 10px;
+  text-align: center;
+  min-height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-message.error {
+  color: #ff0000;
+}
+
+.status-message.success {
+  color: #008000;
+}
+
+.status-message.info {
+  color: #000080;
+}
+
+/* Footer */
+.login-footer {
+  border-top: 1px solid #808080;
+  padding-top: 8px;
+  text-align: center;
+}
+
+.login-version {
+  font-size: 9px;
+  color: #808080;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .login-desktop {
+    padding: 10px;
+  }
+  
+  .login-window {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* Disable text selection on UI elements */
+.login-title-bar,
+.login-title-controls,
+.login-icon,
+.checkbox-label {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
