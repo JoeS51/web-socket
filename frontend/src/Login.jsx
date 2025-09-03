@@ -3,6 +3,8 @@ import './login.css'
 import { useNavigate } from 'react-router-dom'
 const JOE_USERNAME = import.meta.env.VITE_JOE_HANDLE
 const JOE_PASSWORD = import.meta.env.VITE_JOE_PW
+const ELENA_USERNAME = import.meta.env.VITE_ELENA_HANDLE
+const ELENA_PASSWORD = import.meta.env.VITE_ELENA_PW
 
 function Login({ onLogin }) {
   const navigate = useNavigate()
@@ -24,7 +26,7 @@ function Login({ onLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    
+
     if (!formData.username.trim() || !formData.password.trim()) {
       setStatus({ message: 'Please enter both username and password.', type: 'error' })
       return
@@ -36,7 +38,7 @@ function Login({ onLogin }) {
     try {
       // Simulate login process
       await new Promise(resolve => setTimeout(resolve, 1000))
-      
+
       // For demo purposes, accept any non-empty credentials
       if (formData.username.trim() && formData.password.trim()) {
         setStatus({ message: 'Login successful!', type: 'success' })
@@ -57,9 +59,11 @@ function Login({ onLogin }) {
 
   const onSubmit = () => {
     if (formData.username == JOE_USERNAME && formData.password == JOE_PASSWORD) {
-      navigate('/')
+      navigate('/chat', { state: { username: "Joe" } })
+    } else if (formData.username == ELENA_USERNAME && formData.password == ELENA_PASSWORD) {
+      navigate('/chat', { state: { username: "Elena" } })
     } else {
-        console.log("WRONG")
+      console.log("WRONG")
       console.log(formData.username, JOE_USERNAME)
       setStatus({ message: 'Invalid credentials. Please try again.', type: 'error' })
     }

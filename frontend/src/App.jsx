@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { socket } from './socket.jsx'
+import { useLocation } from 'react-router-dom'
 
 function App() {
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
   const [isConnected, setIsConnected] = useState(false)
+  const { username } = useLocation().state || { username: 'Guest' }
 
   useEffect(() => {
     const onConnect = () => {
@@ -51,11 +53,15 @@ function App() {
     }
   }
 
+  if (username === 'Guest') {
+    return <h1>go to login</h1>
+  }
+
   return (
     <div className="win95-desktop">
       <div className="chat-window">
         <div className="title-bar">
-          <div className="title-bar-text">Chat Application</div>
+          <div className="title-bar-text">Welcome, {username}!</div>
           <div className="title-bar-controls">
             <button className="title-bar-control" aria-label="Minimize"></button>
             <button className="title-bar-control" aria-label="Maximize"></button>
