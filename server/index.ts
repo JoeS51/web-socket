@@ -2,6 +2,14 @@ import express from "express";
 import { createServer } from 'node:http';
 import { Server } from 'socket.io';
 import cors from 'cors';
+import { createClient } from '@supabase/supabase-js'
+import dotenv from 'dotenv'
+dotenv.config()
+
+const supabaseurl = process.env.PROJECT_ID || '';
+const supabasekey = process.env.SUPABASE_SECRET || ''
+const supabase = createClient(supabaseurl, supabasekey)
+
 
 const corsOptions = {
   origin: [process.env.CLIENT_BASE_URL || 'http://localhost:3000', 'https://www.getpostman.com'],
@@ -24,8 +32,9 @@ const io = new Server(server, {
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("hi")
+app.get("/", async (req, res) => {
+  const { data, error } = await supabase.from('chat').select();
+  res.send(data)
 });
 
 io.on('connection', (socket) => {

@@ -196,6 +196,40 @@ body {
   color: #000000;
 }
 
+.message-sender {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+/* Joe's messages in blue */
+.joe-message .message-text {
+  color: #000000;
+  font-weight: 500;
+}
+
+.joe-message .message-sender {
+  color: #0066cc;
+}
+
+/* Elena's messages in pink */
+.elena-message .message-text {
+  color: #000000;
+  font-weight: 500;
+}
+
+.elena-message .message-sender {
+  color: #fa48a1;
+}
+
+/* Default message styling for other users */
+.default-message .message-text {
+  color: #000000;
+}
+
+.default-message .message-sender {
+  color: #666666;
+}
+
 /* Input Container */
 .input-container {
   border-top: 1px solid #808080;

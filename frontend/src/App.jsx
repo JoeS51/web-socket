@@ -23,9 +23,13 @@ function App() {
     socket.on('connect', onConnect)
     socket.on('disconnect', onDisconnect)
 
-    socket.on('chat', (msg) => {
-      console.log('Message from server:', msg)
-      setMessages(prev => [...prev, { text: msg, timestamp: new Date().toLocaleTimeString() }])
+    socket.on('chat', (data) => {
+      console.log('Message from server:', data)
+      setMessages(prev => [...prev, {
+        text: data.message || data,
+        timestamp: new Date().toLocaleTimeString(),
+        sender: data.sender || 'unknown'
+      }])
     })
 
     return () => {
@@ -38,7 +42,9 @@ function App() {
   const submitMessage = (e) => {
     e.preventDefault()
     if (message.trim()) {
-      socket.emit('chat', message)
+      // Send message with sender info to server
+      socket.emit('chat', { message: message, sender: username })
+
       setMessage('')
     }
   }
@@ -82,8 +88,9 @@ function App() {
                 <div className="no-messages">No messages yet. Start chatting!</div>
               ) : (
                 messages.map((msg, index) => (
-                  <div key={index} className="message-item">
+                  <div key={index} className={`message-item ${msg.sender?.toLowerCase() === 'joe' ? 'joe-message' : msg.sender?.toLowerCase() === 'elena' ? 'elena-message' : 'default-message'}`}>
                     <span className="message-time">[{msg.timestamp}]</span>
+                    <span className="message-sender">{msg.sender}:</span>
                     <span className="message-text">{msg.text}</span>
                   </div>
                 ))
