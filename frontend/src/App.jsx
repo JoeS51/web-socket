@@ -10,6 +10,19 @@ function App() {
   const { username } = useLocation().state || { username: 'Guest' }
 
   useEffect(() => {
+    const fetchMessages = async () => {
+      const response = await fetch('http://localhost:3000/messages')
+      const data = await response.json()
+      const formattedMessages = data.map(message => ({
+        text: message.message,
+        timestamp: new Date(message.created_at).toLocaleString(),
+        sender: message.user == 1 ? "Joe" : "Elena"
+      }))
+      setMessages(formattedMessages)
+    }
+
+    fetchMessages()
+
     const onConnect = () => {
       console.log('connected')
       setIsConnected(true)
@@ -26,9 +39,9 @@ function App() {
     socket.on('chat', (data) => {
       console.log('Message from server:', data)
       setMessages(prev => [...prev, {
-        text: data.message || data,
-        timestamp: new Date().toLocaleTimeString(),
-        sender: data.sender || 'unknown'
+        text: data.message,
+        timestamp: data.timestamp,
+        sender: data.sender
       }])
     })
 
@@ -42,9 +55,8 @@ function App() {
   const submitMessage = (e) => {
     e.preventDefault()
     if (message.trim()) {
-      // Send message with sender info to server
+      // Send message with sender info to server - server will handle both DB save and broadcast
       socket.emit('chat', { message: message, sender: username })
-
       setMessage('')
     }
   }
@@ -58,6 +70,7 @@ function App() {
       submitMessage(e)
     }
   }
+
 
   if (username === 'Guest') {
     return <h1>go to login</h1>
