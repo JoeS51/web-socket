@@ -16,7 +16,7 @@ function App() {
       const formattedMessages = data.map(message => ({
         text: message.message,
         timestamp: new Date(message.created_at).toLocaleString(),
-        sender: message.user == 1 ? "Joe" : "Elena"
+        sender: message.user == 1 ? "Joe" : "Other"
       }))
       setMessages(formattedMessages)
     }
@@ -101,7 +101,7 @@ function App() {
                 <div className="no-messages">No messages yet. Start chatting!</div>
               ) : (
                 messages.map((msg, index) => (
-                  <div key={index} className={`message-item ${msg.sender?.toLowerCase() === 'joe' ? 'joe-message' : msg.sender?.toLowerCase() === 'elena' ? 'elena-message' : 'default-message'}`}>
+                  <div key={index} className={`message-item ${msg.sender?.toLowerCase() === 'joe' ? 'joe-message' : msg.sender?.toLowerCase() === 'Other' ? 'Other-message' : 'default-message'}`}>
                     <span className="message-time">[{msg.timestamp}]</span>
                     <span className="message-sender">{msg.sender}:</span>
                     <span className="message-text">{msg.text}</span>

@@ -82,7 +82,7 @@ io.on('connection', (socket) => {
       console.log('Message saved to database:', data);
       const broadcastMsg = {
         message: data.message,
-        sender: data.user === 1 ? "Joe" : "Elena",
+        sender: data.user === 1 ? "Joe" : "Other",
         timestamp: new Date(data.created_at).toLocaleString(),
         id: data.id
       };

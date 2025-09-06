@@ -211,13 +211,12 @@ body {
   color: #0066cc;
 }
 
-/* Elena's messages in pink */
-.elena-message .message-text {
+.Other-message .message-text {
   color: #000000;
   font-weight: 500;
 }
 
-.elena-message .message-sender {
+.Other-message .message-sender {
   color: #fa48a1;
 }
 
